@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<nav class="pagination" th:fragment="pages(page)">
+    <a th:if="${page.hasPrevious()}" th:href="@{(page=${page.number - 1},size=${page.size})}">← Trước</a>
+    <span th:text="|Trang ${page.number + 1} / ${page.totalPages}|"></span>
+    <a th:if="${page.hasNext()}" th:href="@{(page=${page.number + 1},size=${page.size})}">Sau →</a>
+</nav>
+</body>
+</html>

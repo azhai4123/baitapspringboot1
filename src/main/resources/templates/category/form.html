@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title th:text="${pageTitle}">Thể loại</title><link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<header th:replace="~{layout/header :: header}"></header>
+<main class="container narrow"><h1 th:text="${pageTitle}"></h1>
+    <form class="card form" th:action="${action}" th:object="${form}" method="post">
+        <label>Tên thể loại<input th:field="*{name}" required maxlength="100"><small class="field-error" th:errors="*{name}"></small></label>
+        <label>Mô tả<textarea th:field="*{description}" rows="4" maxlength="1000"></textarea><small class="field-error" th:errors="*{description}"></small></label>
+        <div class="form-actions"><a class="button secondary" th:href="@{/categories}">Hủy</a><button class="button">Lưu</button></div>
+    </form>
+</main><footer th:replace="~{layout/footer :: footer}"></footer>
+</body></html>

@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Chi tiết phiếu mượn · Thư viện</title><link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<header th:replace="~{layout/header :: header}"></header>
+<main class="container">
+    <div class="page-heading"><div><h1 th:text="|Phiếu mượn #${borrowing.id}|"></h1><p th:text="|${borrowing.memberName} · ${borrowing.memberEmail}|"></p></div><a class="button" th:if="${borrowing.status != 'RETURNED'}" th:href="@{/borrowings/{id}/return(id=${borrowing.id})}">Ghi nhận trả sách</a></div>
+    <p class="notice success" th:if="${success}" th:text="${success}"></p>
+    <section class="summary card"><span>Ngày mượn <strong th:text="${borrowing.borrowDate}"></strong></span><span>Hạn trả <strong th:text="${borrowing.dueDate}"></strong></span><span>Trạng thái <strong th:text="${borrowing.status}"></strong></span><span>Tổng phạt <strong th:text="|${borrowing.totalFine} ₫|"></strong></span></section>
+    <div class="table-wrap"><table><thead><tr><th>ISBN</th><th>Tên sách</th><th>Đã mượn</th><th>Đã trả</th><th>Tiền phạt</th></tr></thead><tbody>
+    <tr th:each="detail : ${borrowing.details}"><td th:text="${detail.isbn}"></td><td th:text="${detail.title}"></td><td th:text="${detail.quantity}"></td><td th:text="${detail.returnedQuantity}"></td><td th:text="|${detail.fineAmount} ₫|"></td></tr>
+    </tbody></table></div><a class="button secondary" th:href="@{/borrowings}">Quay lại danh sách</a>
+</main><footer th:replace="~{layout/footer :: footer}"></footer>
+</body></html>

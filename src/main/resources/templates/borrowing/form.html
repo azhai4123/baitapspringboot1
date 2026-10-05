@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Tạo phiếu mượn · Thư viện</title><link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<header th:replace="~{layout/header :: header}"></header>
+<main class="container narrow"><h1>Tạo phiếu mượn</h1><p class="muted">Hạn trả mặc định là 14 ngày kể từ hôm nay.</p>
+    <form class="card form" th:action="@{/borrowings}" th:object="${form}" method="post">
+        <label>Thành viên<select th:field="*{memberId}" required><option value="">Chọn thành viên</option><option th:each="member : ${members}" th:value="${member.id}" th:text="|${member.fullName} — ${member.email}|"></option></select><small class="field-error" th:errors="*{memberId}"></small></label>
+        <h2>Sách cần mượn</h2>
+        <div class="line-items" id="line-items"><div class="line-item" th:each="line, stat : *{details}">
+            <label>Sách<select th:field="*{details[__${stat.index}__].bookId}" required><option value="">Chọn sách</option><option th:each="book : ${books}" th:value="${book.id}" th:text="|${book.title} — còn ${book.availableQuantity}|"></option></select><small class="field-error" th:errors="*{details[__${stat.index}__].bookId}"></small></label>
+            <label>Số lượng<input type="number" min="1" th:field="*{details[__${stat.index}__].quantity}" required><small class="field-error" th:errors="*{details[__${stat.index}__].quantity}"></small></label>
+            <button class="link danger remove-line" type="button">Xóa dòng</button>
+        </div></div>
+        <small class="field-error" th:errors="*{details}"></small>
+        <template id="detail-row-template"><div class="line-item">
+            <label>Sách<select name="details[__index__].bookId" required><option value="">Chọn sách</option><option th:each="book : ${books}" th:value="${book.id}" th:text="|${book.title} — còn ${book.availableQuantity}|"></option></select></label>
+            <label>Số lượng<input type="number" min="1" name="details[__index__].quantity" value="1" required></label>
+            <button class="link danger remove-line" type="button">Xóa dòng</button>
+        </div></template>
+        <button class="button secondary" id="add-line" type="button">Thêm sách</button>
+        <script th:src="@{/js/main.js}" defer></script>
+        <div class="form-actions"><a class="button secondary" th:href="@{/borrowings}">Hủy</a><button class="button">Tạo phiếu</button></div>
+    </form>
+</main><footer th:replace="~{layout/footer :: footer}"></footer>
+</body></html>

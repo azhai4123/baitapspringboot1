@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Trả sách · Thư viện</title><link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<header th:replace="~{layout/header :: header}"></header>
+<main class="container narrow"><h1 th:text="|Trả sách — Phiếu #${borrowing.id}|"></h1><p class="muted">Phạt 5.000 ₫ mỗi ngày trễ cho mỗi cuốn. Nhập 0 cho sách chưa trả.</p>
+    <form class="card form" th:action="@{/borrowings/{id}/return(id=${borrowing.id})}" th:object="${form}" method="post">
+        <div class="line-item" th:each="line, stat : *{details}">
+            <input type="hidden" th:field="*{details[__${stat.index}__].detailId}">
+            <label th:text="${borrowing.details[stat.index].title}"></label>
+            <label th:text="|Còn phải trả: ${borrowing.details[stat.index].quantity - borrowing.details[stat.index].returnedQuantity}|"></label>
+            <label>Số lượng trả<input type="number" min="0" th:max="${borrowing.details[stat.index].quantity - borrowing.details[stat.index].returnedQuantity}" th:field="*{details[__${stat.index}__].quantity}"><small class="field-error" th:errors="*{details[__${stat.index}__].quantity}"></small></label>
+        </div>
+        <div class="form-actions"><a class="button secondary" th:href="@{/borrowings/{id}(id=${borrowing.id})}">Hủy</a><button class="button">Xác nhận trả</button></div>
+    </form>
+</main><footer th:replace="~{layout/footer :: footer}"></footer>
+</body></html>

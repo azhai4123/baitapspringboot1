@@ -1,0 +1,8 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Lượt mượn thành viên · Thư viện</title><link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body><header th:replace="~{layout/header :: header}"></header>
+<main class="container"><h1>Lượt mượn theo thành viên</h1><nav class="report-links"><a th:href="@{/reports/overdue}">Quá hạn</a><a th:href="@{/reports/popular-books}">Sách được mượn nhiều</a><a th:href="@{/reports/members}">Lượt mượn theo thành viên</a></nav>
+    <div class="table-wrap"><table><thead><tr><th>Thành viên</th><th>Số phiếu mượn</th></tr></thead><tbody>
+    <tr th:each="item : ${items}"><td th:text="${item.memberName}"></td><td th:text="${item.borrowingCount}"></td></tr></tbody></table></div>
+</main><footer th:replace="~{layout/footer :: footer}"></footer></body></html>

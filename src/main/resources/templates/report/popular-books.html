@@ -1,0 +1,9 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Sách phổ biến · Thư viện</title><link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body><header th:replace="~{layout/header :: header}"></header>
+<main class="container"><h1>Top 5 sách được mượn nhiều nhất</h1><nav class="report-links"><a th:href="@{/reports/overdue}">Quá hạn</a><a th:href="@{/reports/popular-books}">Sách được mượn nhiều</a><a th:href="@{/reports/members}">Lượt mượn theo thành viên</a></nav>
+    <div class="table-wrap"><table><thead><tr><th>#</th><th>Tên sách</th><th>Tác giả</th><th>Tổng số cuốn được mượn</th></tr></thead><tbody>
+    <tr th:each="item, stat : ${items}"><td th:text="${stat.count}"></td><td th:text="${item.title}"></td><td th:text="${item.author}"></td><td th:text="${item.borrowCount}"></td></tr>
+    <tr th:if="${#lists.isEmpty(items)}"><td colspan="4" class="empty">Chưa có dữ liệu mượn sách.</td></tr></tbody></table></div>
+</main><footer th:replace="~{layout/footer :: footer}"></footer></body></html>

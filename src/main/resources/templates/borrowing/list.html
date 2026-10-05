@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Mượn trả · Thư viện</title><link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<header th:replace="~{layout/header :: header}"></header>
+<main class="container">
+    <div class="page-heading"><div><h1>Phiếu mượn</h1><p>Theo dõi các lượt mượn và trả sách.</p></div><a class="button" th:href="@{/borrowings/new}">Tạo phiếu mượn</a></div>
+    <p class="notice success" th:if="${success}" th:text="${success}"></p>
+    <div class="table-wrap"><table><thead><tr><th>Mã phiếu</th><th>Thành viên</th><th>Ngày mượn</th><th>Hạn trả</th><th>Trạng thái</th><th>Tiền phạt</th><th></th></tr></thead><tbody>
+    <tr th:each="borrowing : ${borrowings.content}"><td th:text="|#${borrowing.id}|"></td><td th:text="${borrowing.memberName}"></td><td th:text="${borrowing.borrowDate}"></td><td th:text="${borrowing.dueDate}"></td><td><span class="badge" th:text="${borrowing.status}"></span></td><td th:text="|${borrowing.totalFine} ₫|"></td><td><a th:href="@{/borrowings/{id}(id=${borrowing.id})}">Chi tiết</a></td></tr>
+    <tr th:if="${borrowings.empty}"><td colspan="7" class="empty">Chưa có phiếu mượn.</td></tr></tbody></table></div>
+    <div th:replace="~{layout/pagination :: pages(${borrowings})}"></div>
+</main><footer th:replace="~{layout/footer :: footer}"></footer>
+</body></html>

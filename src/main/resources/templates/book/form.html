@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title th:text="${pageTitle}">Sách</title><link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<header th:replace="~{layout/header :: header}"></header>
+<main class="container narrow"><h1 th:text="${pageTitle}"></h1>
+    <form class="card form" th:action="${action}" th:object="${form}" method="post">
+        <label>ISBN<input th:field="*{isbn}" required maxlength="20"><small class="field-error" th:errors="*{isbn}"></small></label>
+        <label>Tên sách<input th:field="*{title}" required maxlength="255"><small class="field-error" th:errors="*{title}"></small></label>
+        <label>Tác giả<input th:field="*{author}" required maxlength="150"><small class="field-error" th:errors="*{author}"></small></label>
+        <label>Tổng số lượng<input type="number" min="0" th:field="*{totalQuantity}" required><small class="field-error" th:errors="*{totalQuantity}"></small></label>
+        <label>Thể loại<select th:field="*{categoryId}" required><option value="">Chọn thể loại</option><option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option></select><small class="field-error" th:errors="*{categoryId}"></small></label>
+        <div class="form-actions"><a class="button secondary" th:href="@{/books}">Hủy</a><button class="button">Lưu</button></div>
+    </form>
+</main><footer th:replace="~{layout/footer :: footer}"></footer>
+</body></html>
